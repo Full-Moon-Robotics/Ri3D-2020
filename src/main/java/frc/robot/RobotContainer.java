@@ -7,11 +7,18 @@
 
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+
+import frc.robot.commands.TankDrive;
+import frc.robot.subsystems.DriveTrain;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,13 +32,24 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  final DriveTrain m_drivetrain = new DriveTrain();
 
+  // Configure the button bindings
+  final Joystick leftstick = new Joystick(0);
+  final Joystick rightstick = new Joystick(1);
+  final DoubleSupplier leftsupply = () -> leftstick.getY(Hand.kLeft);
+  final DoubleSupplier rightsupply = () -> rightstick.getY(Hand.kLeft);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    // Configure the button bindings
+
+
+
+    m_drivetrain.setDefaultCommand(new TankDrive(
+    leftsupply,
+    rightsupply, m_drivetrain));
     configureButtonBindings();
   }
 
@@ -42,6 +60,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+      // Assign default commands
+    
   }
 
 
