@@ -22,10 +22,8 @@ public class DriveTrain extends SubsystemBase {
   
     private final CANSparkMax m_leftMotor;
     private final CANSparkMax m_leftMotor_1;
-    private final CANSparkMax m_leftMotor_2;
     private final CANSparkMax m_rightMotor;
     private final CANSparkMax m_rightMotor_1;
-    private final CANSparkMax m_rightMotor_2;
     /*
     private final PWMSparkMax m_leftMotor;
     private final PWMSparkMax m_rightMotor;
@@ -37,11 +35,10 @@ public class DriveTrain extends SubsystemBase {
     
     m_leftMotor = new CANSparkMax(5, MotorType.kBrushless);
     m_leftMotor_1 = new CANSparkMax(6, MotorType.kBrushless);
-    m_leftMotor_2 = new CANSparkMax(7, MotorType.kBrushless);
 
     m_rightMotor = new CANSparkMax(8, MotorType.kBrushless);
     m_rightMotor_1 = new CANSparkMax(9, MotorType.kBrushless);
-    m_rightMotor_2 = new CANSparkMax(10, MotorType.kBrushless);
+    
 
     /*
     m_leftMotor = new PWMSparkMax(0);
@@ -54,18 +51,12 @@ public class DriveTrain extends SubsystemBase {
     m_leftMotor_1.restoreFactoryDefaults();
     m_leftMotor_1.getEncoder(EncoderType.kHallSensor, 4096);
     m_leftMotor_1.follow(m_leftMotor);
-    m_leftMotor_2.restoreFactoryDefaults();
-    m_leftMotor_2.getEncoder(EncoderType.kHallSensor, 4096);
-    m_leftMotor_2.follow(m_leftMotor);
     
     m_rightMotor.restoreFactoryDefaults();
     m_rightMotor.getEncoder(EncoderType.kHallSensor, 4096);
     m_rightMotor_1.restoreFactoryDefaults();
     m_rightMotor_1.getEncoder(EncoderType.kHallSensor, 4096);
     m_rightMotor_1.follow(m_rightMotor);
-    m_rightMotor_2.restoreFactoryDefaults();
-    m_rightMotor_2.getEncoder(EncoderType.kHallSensor, 4096);
-    m_rightMotor_2.follow(m_rightMotor);
 
   }
   public void drive(double left, double right){
