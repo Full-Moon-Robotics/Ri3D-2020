@@ -11,9 +11,12 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+//wpilibj.buttons
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.DriverStation;
 
 import frc.robot.commands.TankDrive;
 import frc.robot.subsystems.DriveTrain;
@@ -55,6 +58,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
       // Assign default commands
+
+      //Print color string to console 
+      //TODO replace with a command that does this in initialization and returns true on isFinished()
+      new JoystickButton(leftstick, 1).whenPressed(()->System.out.println(DriverStation.getInstance().getGameSpecificMessage()));
     
   }
 
