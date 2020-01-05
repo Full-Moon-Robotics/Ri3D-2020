@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -23,10 +24,7 @@ public class DriveTrain extends SubsystemBase {
     private final CANSparkMax m_leftMotor_1;
     private final CANSparkMax m_rightMotor;
     private final CANSparkMax m_rightMotor_1;
-    /*
-    private final PWMSparkMax m_leftMotor;
-    private final PWMSparkMax m_rightMotor;
-    */
+    private final Compressor m_Compressor;
     private final DifferentialDrive m_drive;
     
   public DriveTrain() {
@@ -38,12 +36,11 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor = new CANSparkMax(8, MotorType.kBrushless);
     m_rightMotor_1 = new CANSparkMax(9, MotorType.kBrushless);
     
-
-    /*
-    m_leftMotor = new PWMSparkMax(0);
-    m_rightMotor = new PWMSparkMax(1);
-    */
     m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
+
+    m_Compressor = new Compressor();
+    m_Compressor.setClosedLoopControl(true);
+    
 
     m_leftMotor.restoreFactoryDefaults();
     m_leftMotor.getEncoder(EncoderType.kHallSensor, 4096);
