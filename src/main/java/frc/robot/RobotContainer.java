@@ -13,13 +13,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //wpilibj.buttons
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
 
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.MoveElevator;
+import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -30,12 +32,14 @@ import frc.robot.subsystems.DriveTrain;
 public class RobotContainer {
 
   final DriveTrain m_drivetrain = new DriveTrain();
+  final Elevator m_elevator = new Elevator();
+  final Intake m_intake = new Intake();
 
   // Configure the button bindings
-  final Joystick leftstick = new Joystick(0);
-  final Joystick rightstick = new Joystick(1);
-  final DoubleSupplier leftsupply = () -> leftstick.getY(Hand.kLeft);
-  final DoubleSupplier rightsupply = () -> rightstick.getY(Hand.kLeft);
+  final Joystick controller = new Joystick(0);
+  final DoubleSupplier leftsupply = () -> controller.getRawAxis(1);
+  final DoubleSupplier rightsupply = () -> controller.getRawAxis(5);
+  final DoubleSupplier elevatorSupplier = () -> controller.getRawAxis(4) - controller.getRawAxis(3);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -47,6 +51,8 @@ public class RobotContainer {
     m_drivetrain.setDefaultCommand(new TankDrive(
     leftsupply,
     rightsupply, m_drivetrain));
+
+    m_elevator.setDefaultCommand(new MoveElevator(elevatorSupplier, m_elevator));
     configureButtonBindings();
   }
 
@@ -61,8 +67,11 @@ public class RobotContainer {
 
       //Print color string to console 
       //TODO replace with a command that does this in initialization and returns true on isFinished()
-      new JoystickButton(leftstick, 1).whenPressed(()->System.out.println(DriverStation.getInstance().getGameSpecificMessage()));
-    
+      new JoystickButton(controller, 1).whenPressed(()->System.out.println(DriverStation.getInstance().getGameSpecificMessage()));
+
+      new JoystickButton(controller, 4).whenPressed(new RunIntake(()->1.0, m_intake));
+      new JoystickButton(controller, 5).whenPressed(new RunIntake(()->-1.0, m_intake));
+      
   }
 
 

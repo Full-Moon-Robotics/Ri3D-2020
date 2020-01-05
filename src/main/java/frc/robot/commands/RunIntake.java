@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.subsystems.Intake;
@@ -15,17 +17,19 @@ import frc.robot.subsystems.Intake;
 /**
  * Have the robot drive tank style.
  */
-public class PullIntake extends CommandBase {
+public class RunIntake extends CommandBase {
   private final Intake m_intake;
-  public PullIntake(Intake intake) {
+  private final DoubleSupplier m_speed;
+  public RunIntake(DoubleSupplier speed, Intake intake) {
     m_intake = intake;
+    m_speed = speed;
     addRequirements(m_intake);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_intake.run_intake(1);
+    m_intake.run_intake(m_speed.getAsDouble());
   }
 
   // Make this return true when this Command no longer needs to run execute()

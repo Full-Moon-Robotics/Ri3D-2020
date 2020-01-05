@@ -7,27 +7,29 @@
 
 package frc.robot.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Elevator;
 
 
 /**
  * Have the robot drive tank style.
  */
-public class PushIntake extends CommandBase {
-  
-  private final Intake m_intake;
-
-  public PushIntake(Intake intake) {
-    m_intake = intake;
-    addRequirements(m_intake);
+public class MoveElevator extends CommandBase {
+  private final Elevator m_elevator;
+  private final DoubleSupplier m_speed;
+  public MoveElevator(DoubleSupplier speed, Elevator elevator) {
+    m_elevator = elevator;
+    m_speed = speed;
+    addRequirements(m_elevator);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_intake.run_intake(-1);
+    m_elevator.run_elevator(m_speed.getAsDouble());
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -39,6 +41,6 @@ public class PushIntake extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    m_intake.run_intake(0);
+    m_elevator.run_elevator(0);
   }
 }

@@ -21,10 +21,7 @@ public class Elevator extends SubsystemBase {
   
     private final CANSparkMax m_leftMotor;
     private final CANSparkMax m_rightMotor;
-    /*
-    private final PWMSparkMax m_leftMotor;
-    private final PWMSparkMax m_rightMotor;
-    */
+
     private final DifferentialDrive m_elevator;
     
   public Elevator() {
@@ -34,12 +31,6 @@ public class Elevator extends SubsystemBase {
 
     m_rightMotor = new CANSparkMax(11, MotorType.kBrushless);
     
-    
-
-    /*
-    m_leftMotor = new PWMSparkMax(0);
-    m_rightMotor = new PWMSparkMax(1);
-    */
     m_elevator = new DifferentialDrive(m_leftMotor, m_rightMotor);
 
     m_leftMotor.restoreFactoryDefaults();
@@ -49,8 +40,8 @@ public class Elevator extends SubsystemBase {
     m_rightMotor.getEncoder(EncoderType.kHallSensor, 4096);
 
   }
-  public void drive(double left, double right){
-    m_elevator.tankDrive(left, right);
+  public void run_elevator(double speed){
+    m_elevator.tankDrive(speed, speed);
   }
 
   @Override
