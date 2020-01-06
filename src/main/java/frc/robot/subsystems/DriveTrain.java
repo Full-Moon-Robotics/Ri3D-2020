@@ -56,7 +56,7 @@ public class DriveTrain extends SubsystemBase {
 
   }
   public void drive(double left, double right){
-    m_drive.tankDrive(left, right);
+    m_drive.tankDrive(0-right, 0-left);
   }
 
   @Override
