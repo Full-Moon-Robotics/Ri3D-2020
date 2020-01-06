@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.RunIntake;
+import frc.robot.commands.RunOutput;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -69,9 +70,11 @@ public class RobotContainer {
       //TODO replace with a command that does this in initialization and returns true on isFinished()
       new JoystickButton(controller, 1).whenPressed(()->System.out.println(DriverStation.getInstance().getGameSpecificMessage()));
 
-      new JoystickButton(controller, 4).whenPressed(new RunIntake(()->1.0, m_intake));
-      new JoystickButton(controller, 5).whenPressed(new RunIntake(()->-1.0, m_intake));
-      
+      new JoystickButton(controller, 2).whileHeld(new RunOutput(()->-1.0, m_output));
+      new JoystickButton(controller, 3).whileHeld(new RunIntake(()->-1.0, m_intake));
+      new JoystickButton(controller, 4).whileHeld(new RunIntake(()->1.0, m_intake));
+      new JoystickButton(controller, 5).whileHeld(new RunOutput(()->1.0, m_intake));
+
   }
 
 
