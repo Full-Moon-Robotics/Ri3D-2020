@@ -19,14 +19,16 @@ public class Elevator extends SubsystemBase {
    * Elevator.
    */
   
-    private final CANSparkMax m_leftMotor;
-    private final CANSparkMax m_rightMotor;
+    private  CANSparkMax m_leftMotor;
+    private  CANSparkMax m_rightMotor;
 
-    private final DifferentialDrive m_elevator;
+    private  DifferentialDrive m_elevator;
     
   public Elevator() {
     super();
-    
+    if(!SubsystemConstants.REAL_ROBOT){
+      return;
+    }
     m_leftMotor = new CANSparkMax(10, MotorType.kBrushless);
 
     m_rightMotor = new CANSparkMax(11, MotorType.kBrushless);
@@ -41,7 +43,9 @@ public class Elevator extends SubsystemBase {
 
   }
   public void run_elevator(double speed){
-    m_elevator.tankDrive(speed, speed);
+    if(m_elevator != null){
+      m_elevator.tankDrive(speed, speed);
+    }
   }
 
   @Override

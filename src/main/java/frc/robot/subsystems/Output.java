@@ -12,15 +12,17 @@ public class Output extends SubsystemBase {
      * Output.
      */
     
-      private final CANSparkMax m_outputLeft;
-      private final CANSparkMax m_outputRight;
+      private  CANSparkMax m_outputLeft;
+      private  CANSparkMax m_outputRight;
 
 
-      private final DifferentialDrive m_output;
+      private  DifferentialDrive m_output;
 
     public Output() {
       super();
-      
+      if(!SubsystemConstants.REAL_ROBOT){
+        return;
+      }
       m_outputLeft = new CANSparkMax(12, MotorType.kBrushless);
   
       m_outputRight = new CANSparkMax(13, MotorType.kBrushless);
@@ -36,7 +38,9 @@ public class Output extends SubsystemBase {
   
     }
     public void run_output(double speed){
-      m_output.tankDrive(speed, speed);
+      if(m_output != null){
+         m_output.tankDrive(speed, speed);
+      }
     }
   
     @Override

@@ -19,15 +19,17 @@ public class DriveTrain extends SubsystemBase {
    * Drive Train.
    */
   
-    private final CANSparkMax m_leftMotor;
-    private final CANSparkMax m_leftMotor_1;
-    private final CANSparkMax m_rightMotor;
-    private final CANSparkMax m_rightMotor_1;
-    private final DifferentialDrive m_drive;
+    private  CANSparkMax m_leftMotor;
+    private  CANSparkMax m_leftMotor_1;
+    private  CANSparkMax m_rightMotor;
+    private  CANSparkMax m_rightMotor_1;
+    private  DifferentialDrive m_drive;
     
   public DriveTrain() {
     super();
-    
+    if(!SubsystemConstants.REAL_ROBOT){ //REMOVE THIS FOR REAL ROBOT
+      return;
+    }
     m_leftMotor = new CANSparkMax(5, MotorType.kBrushless);
     m_leftMotor_1 = new CANSparkMax(6, MotorType.kBrushless);
 
@@ -51,7 +53,9 @@ public class DriveTrain extends SubsystemBase {
 
   }
   public void drive(double left, double right){
-    m_drive.tankDrive(0-right, 0-left);
+    if(m_drive != null){
+      m_drive.tankDrive(0-right, 0-left);
+    }
   }
 
   @Override

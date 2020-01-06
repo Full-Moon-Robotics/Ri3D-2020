@@ -15,14 +15,18 @@ public class Intake extends SubsystemBase {
      * Intake.
      */
     
-      private final CANSparkMax m_intakeLeft;
-      private final CANSparkMax m_intakeRight;
-      private final Compressor m_Compressor;
+      private  CANSparkMax m_intakeLeft;
+      private  CANSparkMax m_intakeRight;
+      private  Compressor m_Compressor;
 
-      private final DifferentialDrive m_intake;
+      private  DifferentialDrive m_intake;
 
     public Intake() {
       super();
+
+      if(!SubsystemConstants.REAL_ROBOT){
+        return;
+      }
       
       m_intakeLeft = new CANSparkMax(12, MotorType.kBrushless);
   
@@ -45,7 +49,9 @@ public class Intake extends SubsystemBase {
   
     }
     public void run_intake(double speed){
-      m_intake.tankDrive(speed, speed);
+      if(m_intake != null){
+        m_intake.tankDrive(speed, speed);
+      }
     }
   
     @Override

@@ -15,11 +15,14 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.TankDrive;
+import frc.robot.commands.ControlPanelPosition;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.RunOutput;
+import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Output;
 import frc.robot.subsystems.Elevator;
@@ -33,10 +36,12 @@ import frc.robot.subsystems.Intake;
  */
 public class RobotContainer {
 
+
   final DriveTrain m_drivetrain = new DriveTrain();
   final Elevator m_elevator = new Elevator();
   final Intake m_intake = new Intake();
   final Output m_output = new Output();
+  final ControlPanel controlPanel = new ControlPanel();
 
   // Configure the button bindings
   final Joystick controller = new Joystick(0);
@@ -70,12 +75,18 @@ public class RobotContainer {
 
       //Print color string to console 
       //TODO replace with a command that does this in initialization and returns true on isFinished()
-      new JoystickButton(controller, 1).whenPressed(()->System.out.println(DriverStation.getInstance().getGameSpecificMessage()));
+      new JoystickButton(controller, 1).whenPressed(()->{
+        String gameString = DriverStation.getInstance().getGameSpecificMessage();
+        System.out.println(gameString);
+        DriverStation.reportError(gameString, false);
+        SmartDashboard.putString("DB/String 0", gameString);
+      });
 
       new JoystickButton(controller, 2).whileHeld(new RunOutput(()->-1.0, m_output));
       new JoystickButton(controller, 3).whileHeld(new RunIntake(()->-1.0, m_intake));
       new JoystickButton(controller, 4).whileHeld(new RunIntake(()->1.0, m_intake));
       new JoystickButton(controller, 5).whileHeld(new RunOutput(()->1.0, m_output));
+      new JoystickButton(controller, 6).whenPressed(new ControlPanelPosition(controlPanel));
 
   }
 
