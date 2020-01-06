@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import edu.wpi.first.wpilibj.Compressor;
+import edu.wpi.first.wpilibj.Solenoid;
 
 
 public class Intake extends SubsystemBase {
@@ -18,8 +19,9 @@ public class Intake extends SubsystemBase {
       private  CANSparkMax m_intakeLeft;
       private  CANSparkMax m_intakeRight;
       private  Compressor m_Compressor;
-
-      private  DifferentialDrive m_intake;
+      private Solenoid m_Solenoid;
+      private Solenoid m_Solenoid2;
+      private DifferentialDrive m_intake;
 
     public Intake() {
       super();
@@ -42,7 +44,14 @@ public class Intake extends SubsystemBase {
       m_Compressor = new Compressor();
       m_Compressor.setClosedLoopControl(true);
       
-      //TODO: Solenoid for lifting
+
+      m_Solenoid = new Solenoid(1);
+    
+      m_Solenoid2 = new Solenoid(2);
+      
+    
+
+      
 
     
       m_intake = new DifferentialDrive(m_intakeLeft, m_intakeRight);
