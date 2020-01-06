@@ -21,6 +21,7 @@ import frc.robot.commands.MoveElevator;
 import frc.robot.commands.RunIntake;
 import frc.robot.commands.RunOutput;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Output;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 
@@ -35,6 +36,7 @@ public class RobotContainer {
   final DriveTrain m_drivetrain = new DriveTrain();
   final Elevator m_elevator = new Elevator();
   final Intake m_intake = new Intake();
+  final Output m_output = new Output();
 
   // Configure the button bindings
   final Joystick controller = new Joystick(0);
@@ -73,7 +75,7 @@ public class RobotContainer {
       new JoystickButton(controller, 2).whileHeld(new RunOutput(()->-1.0, m_output));
       new JoystickButton(controller, 3).whileHeld(new RunIntake(()->-1.0, m_intake));
       new JoystickButton(controller, 4).whileHeld(new RunIntake(()->1.0, m_intake));
-      new JoystickButton(controller, 5).whileHeld(new RunOutput(()->1.0, m_intake));
+      new JoystickButton(controller, 5).whileHeld(new RunOutput(()->1.0, m_output));
 
   }
 
