@@ -29,7 +29,7 @@ public class PowerCell extends SubsystemBase {
       }
       
       intakeMotor = new CANSparkMax(12, MotorType.kBrushed); //changed to reflect final motor
-      beltMotor = new CANSparkMax(13, MotorType.kBrushless);
+      beltMotor = new CANSparkMax(11, MotorType.kBrushless);
       outputMotor = new CANSparkMax(14, MotorType.kBrushless);
   
       intakeMotor.restoreFactoryDefaults();

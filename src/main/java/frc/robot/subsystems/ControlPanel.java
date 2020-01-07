@@ -34,7 +34,7 @@ public class ControlPanel extends SubsystemBase {
     m_Solenoid3 = new Solenoid(3);
 
 
-    spinnerMotor = new CANSparkMax(14, MotorType.kBrushless);
+    spinnerMotor = new CANSparkMax(7, MotorType.kBrushless);
     spinnerMotor.restoreFactoryDefaults();
     spinnerMotor.getEncoder(EncoderType.kHallSensor, 4096);
   }
