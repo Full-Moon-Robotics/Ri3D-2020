@@ -67,6 +67,7 @@ public class ColorDisplay extends SubsystemBase {
   SimpleWidget fmsColor;
   SimpleWidget detectedColor;
   SimpleWidget scoredColor;
+  SimpleWidget rawPixel;
   private ControlPanelWedge fmsColorCache;
   /**
    * Creates a new ColorDisplay.
@@ -80,7 +81,15 @@ public class ColorDisplay extends SubsystemBase {
     detectedColor.withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "black"));
     detectedColor.getEntry().setBoolean(false);
 
+    rawPixel = Shuffleboard.getTab("Tab 1").add("Raw Pixel", false).withWidget("Boolean Box");
+    rawPixel.withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "black"));
+    rawPixel.getEntry().setBoolean(false);
+
     scoredColor = Shuffleboard.getTab("Tab 1").add("Scored Color", false).withWidget("Boolean Box");
+    scoredColor.withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "black"));
+    scoredColor.getEntry().setBoolean(false);
+
+    Shuffleboard.getTab("Tab 1").add("Scored Color", false).withWidget("Boolean Box");
     scoredColor.withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "black"));
     scoredColor.getEntry().setBoolean(false);
 
@@ -91,6 +100,11 @@ public class ColorDisplay extends SubsystemBase {
       w.withProperties(Map.of("colorWhenTrue", color.getDisplayName(), "colorWhenFalse", "black"));
     }
     w.getEntry().setBoolean(color != null);
+  }
+
+  private void setWidget(SimpleWidget w, String hex){
+    w.withProperties(Map.of("colorWhenTrue", hex, "colorWhenFalse", "black"));
+    w.getEntry().setBoolean(true);
   }
 
   public ControlPanelWedge getFMSColor(){
@@ -106,6 +120,10 @@ public class ColorDisplay extends SubsystemBase {
 
   public void setDetectedColor(ControlPanelWedge color){
     setWidget(detectedColor, color);
+  }
+
+  public void setRawPixel(String color){
+    setWidget(rawPixel, color);
   }
 
   public void setScoredColor(ControlPanelWedge color) {
