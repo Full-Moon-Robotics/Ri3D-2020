@@ -31,11 +31,10 @@ public class ManualPowerCell extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_powercell.run_intake(m_inspeed.getAsDouble());
     if (m_outspeed.getAsDouble() == 0){
-      m_powercell.run_output(-1);
-    }else{
-      m_powercell.run_output(m_inspeed.getAsDouble());
+      m_powercell.run_intake(m_inspeed.getAsDouble());
+    }else if (m_inspeed.getAsDouble() == 0){
+      m_powercell.run_output(m_outspeed.getAsDouble());
     }
     m_powercell.run_belt(Math.max(m_inspeed.getAsDouble(), m_outspeed.getAsDouble()));
   }

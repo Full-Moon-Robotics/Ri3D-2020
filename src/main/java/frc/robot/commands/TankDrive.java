@@ -39,7 +39,7 @@ public class TankDrive extends CommandBase {
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_drivetrain.drive(m_left.getAsDouble(), m_right.getAsDouble());
+    m_drivetrain.drive(-m_left.getAsDouble(), -m_right.getAsDouble());
   }
 
   // Make this return true when this Command no longer needs to run execute()

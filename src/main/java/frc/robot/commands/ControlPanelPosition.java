@@ -47,11 +47,13 @@ public class ControlPanelPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(vision.color[3] != null) {
     if(ControlPanelWedge.values()[vision.color[3]].next().next().equals(colorDisplay.getFMSColor())){
       finished = true;
     } else{
       controlPanel.spin();
     }
+  }
   }
 
   // Called once the command ends or is interrupted.
