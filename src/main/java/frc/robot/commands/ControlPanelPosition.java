@@ -9,27 +9,30 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.subsystems.ColorDisplay;
 import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.ColorDisplay.ControlPanelWedge;
 
 //Spin the control panel to a specific color
 public class ControlPanelPosition extends CommandBase {
   ControlPanel controlPanel;
+  ColorDisplay colorDisplay;
   boolean finished = false;
-  String gameString = "";
   /**
    * Creates a new ControlPanelPosition.
    */
-  public ControlPanelPosition(ControlPanel controlPanel) {
+  public ControlPanelPosition(ControlPanel controlPanel, ColorDisplay colorDisplay) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.controlPanel = controlPanel;
-    addRequirements(this.controlPanel);
+    this.colorDisplay = colorDisplay;
+    addRequirements(this.controlPanel, this.colorDisplay);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    gameString = DriverStation.getInstance().getGameSpecificMessage();
-    if(gameString.isEmpty()){
+    ControlPanelWedge color = colorDisplay.getFMSColor();
+    if(color == null){
       //Not ready!
       finished = true;
       DriverStation.reportWarning("Position Not Ready", false);
@@ -40,7 +43,7 @@ public class ControlPanelPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(controlPanel.getCurrentColor().equals(gameString)){
+    if(controlPanel.getCurrentColor().equals(colorDisplay.getFMSColor())){
       finished = true;
     } else{
       controlPanel.spin();

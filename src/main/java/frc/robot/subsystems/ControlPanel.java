@@ -12,6 +12,7 @@ import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.subsystems.ColorDisplay.ControlPanelWedge;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class ControlPanel extends SubsystemBase {
@@ -38,9 +39,9 @@ public class ControlPanel extends SubsystemBase {
     spinnerMotor.getEncoder(EncoderType.kHallSensor, 4096);
   }
 
-  public String getCurrentColor(){
+  public ControlPanelWedge getCurrentColor(){
     //Put sensor code here
-    return "";
+    return null;
   }
 
   public void stop(){

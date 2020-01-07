@@ -7,10 +7,17 @@
 
 package frc.robot;
 
+import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,6 +29,7 @@ import frc.robot.commands.TankDrive;
 import frc.robot.commands.ControlPanelPosition;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.ManualPowerCell;
+import frc.robot.subsystems.ColorDisplay;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PowerCell;
@@ -40,6 +48,14 @@ public class RobotContainer {
   final Elevator m_elevator = new Elevator();
   final PowerCell m_powercell = new PowerCell();
   final ControlPanel controlPanel = new ControlPanel();
+  final ColorDisplay colorDisplay = new ColorDisplay();
+
+  Timer fmsColorPoller = new Timer();
+  TimerTask fmsColorPollTask = new TimerTask(){
+    public void run(){
+      colorDisplay.fetchFMSColor();
+    }
+  };
 
   // Configure the button bindings
   final Joystick controller = new Joystick(0);
@@ -83,7 +99,10 @@ public class RobotContainer {
     configureButtonBindings();
 
     m_powercell.setDefaultCommand(new ManualPowerCell(intakeSuppier, outputSupplier, m_powercell));
-  }
+
+    fmsColorPoller.scheduleAtFixedRate(fmsColorPollTask, 0, TimeUnit.SECONDS.toMillis(1));
+
+   }
 
   /**
    * Use this method to define your button->command mappings.  Buttons can be created by
@@ -103,7 +122,7 @@ public class RobotContainer {
         SmartDashboard.putString("DB/String 0", gameString);
       });
 
-      new JoystickButton(controller, 6).whenPressed(new ControlPanelPosition(controlPanel));
+      new JoystickButton(controller, 6).whenPressed(new ControlPanelPosition(controlPanel, colorDisplay));
 
   }
 
