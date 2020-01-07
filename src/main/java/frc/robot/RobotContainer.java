@@ -20,13 +20,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ControlPanelPosition;
 import frc.robot.commands.MoveElevator;
-import frc.robot.commands.RunIntake;
-import frc.robot.commands.RunOutput;
+import frc.robot.commands.ManualPowerCell;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Output;
+import frc.robot.subsystems.PowerCell;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -39,15 +37,32 @@ public class RobotContainer {
 
   final DriveTrain m_drivetrain = new DriveTrain();
   final Elevator m_elevator = new Elevator();
-  final Intake m_intake = new Intake();
-  final Output m_output = new Output();
+  final PowerCell m_powercell = new PowerCell();
   final ControlPanel controlPanel = new ControlPanel();
 
   // Configure the button bindings
   final Joystick controller = new Joystick(0);
   final DoubleSupplier leftsupply = () -> controller.getRawAxis(1);
   final DoubleSupplier rightsupply = () -> controller.getRawAxis(5);
-  final DoubleSupplier elevatorSupplier = () -> controller.getRawAxis(4) - controller.getRawAxis(3);
+  final DoubleSupplier elevatorSupplier = () ->{ if(controller.getRawButton(3)){
+    return controller.getRawAxis(4) - controller.getRawAxis(3);
+  }else{
+    return 0;
+  }
+  };
+  final DoubleSupplier intakeSuppier = () -> { if (controller.getRawButton(3)){
+    return 0;
+  }else{
+    return controller.getRawAxis(3);
+  }
+  };
+  final DoubleSupplier outputSupplier = () -> { if (controller.getRawButton(3)){
+    return 0;
+  }else{
+    return controller.getRawAxis(4);
+  }
+
+  };
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -62,6 +77,8 @@ public class RobotContainer {
 
     m_elevator.setDefaultCommand(new MoveElevator(elevatorSupplier, m_elevator));
     configureButtonBindings();
+
+    m_powercell.setDefaultCommand(new ManualPowerCell(intakeSuppier, outputSupplier, m_powercell));
   }
 
   /**
@@ -82,10 +99,6 @@ public class RobotContainer {
         SmartDashboard.putString("DB/String 0", gameString);
       });
 
-      new JoystickButton(controller, 2).whileHeld(new RunOutput(()->-1.0, m_output));
-      new JoystickButton(controller, 3).whileHeld(new RunIntake(()->-1.0, m_intake));
-      new JoystickButton(controller, 4).whileHeld(new RunIntake(()->1.0, m_intake));
-      new JoystickButton(controller, 5).whileHeld(new RunOutput(()->1.0, m_output));
       new JoystickButton(controller, 6).whenPressed(new ControlPanelPosition(controlPanel));
 
   }

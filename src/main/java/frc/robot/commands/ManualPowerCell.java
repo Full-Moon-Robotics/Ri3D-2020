@@ -11,25 +11,29 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import frc.robot.subsystems.Output;
+import frc.robot.subsystems.PowerCell;
 
 
 /**
- * Have the robot drive tank style.
- */
-public class RunOutput extends CommandBase {
-  private final Output m_output;
-  private final DoubleSupplier m_speed;
-  public RunOutput(DoubleSupplier speed, Output output) {
-    m_output = output;
-    m_speed = speed;
-    addRequirements(m_output);
+* Manipulate power cells manually 
+*/
+public class ManualPowerCell extends CommandBase {
+  private final PowerCell m_powercell;
+  private final DoubleSupplier m_inspeed;
+  private final DoubleSupplier m_outspeed;
+  public ManualPowerCell(DoubleSupplier inspeed, DoubleSupplier outspeed, PowerCell powerCell) {
+    m_powercell = powerCell;
+    m_inspeed = inspeed;
+    m_outspeed = outspeed;
+    addRequirements(m_powercell);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   public void execute() {
-    m_output.run_output(m_speed.getAsDouble());
+    m_powercell.run_intake(m_inspeed.getAsDouble());
+    m_powercell.run_output(m_inspeed.getAsDouble());
+    m_powercell.run_belt(Math.max(m_inspeed.getAsDouble(), m_outspeed.getAsDouble()));
   }
 
   // Make this return true when this Command no longer needs to run execute()
@@ -41,6 +45,9 @@ public class RunOutput extends CommandBase {
   // Called once after isFinished returns true
   @Override
   public void end(boolean interrupted) {
-    m_output.run_output(0);
+    m_powercell.run_intake(0);
+    m_powercell.run_output(0);
+    m_powercell.run_belt(0);  
   }
+
 }
