@@ -9,18 +9,15 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.cameraserver.CameraServer;
 //import sun.awt.image.PixelConverter.ByteGray;
-import edu.wpi.first.wpiutil.math.Num;
 import frc.robot.subsystems.ColorDisplay.ControlPanelWedge;
 
 import java.util.Arrays;
-import java.util.Random;
-import java.util.stream.Stream;
+
 
 import org.opencv.core.Mat;
 
 import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.MjpegServer;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoSource;
 
