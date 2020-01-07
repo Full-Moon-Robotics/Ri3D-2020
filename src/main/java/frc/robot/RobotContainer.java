@@ -25,6 +25,7 @@ import frc.robot.commands.ManualPowerCell;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PowerCell;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Elevator;
 
 /**
@@ -40,6 +41,7 @@ public class RobotContainer {
   final Elevator m_elevator = new Elevator();
   final PowerCell m_powercell = new PowerCell();
   final ControlPanel controlPanel = new ControlPanel();
+  final Vision vision = new Vision();
 
   // Configure the button bindings
   final Joystick controller = new Joystick(0);
@@ -70,8 +72,6 @@ public class RobotContainer {
    */
   public RobotContainer() {
 
-
-    CameraServer.getInstance().startAutomaticCapture();
 
 
 
