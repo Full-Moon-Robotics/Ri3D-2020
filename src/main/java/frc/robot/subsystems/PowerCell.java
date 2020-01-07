@@ -44,19 +44,19 @@ public class PowerCell extends SubsystemBase {
     }
     public void run_intake(double speed){
       if(intakeMotor != null){
-        intakeMotor.set(speed);
-        beltMotor.set(speed);
+        intakeMotor.set(-speed);
+        outputMotor.set(speed/2);
       }
     }
     
     public void run_output(double speed){
       if(intakeMotor != null){
-        outputMotor.set(speed);
+        outputMotor.set(-speed);
       }
     }
     public void run_belt(double speed){
       if(intakeMotor != null){
-        outputMotor.set(speed);
+        beltMotor.set(speed);
       }
     }
     

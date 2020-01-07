@@ -85,7 +85,7 @@ public class RobotContainer {
   final DoubleSupplier outputSupplier = () -> { if (controller.getRawButton(3)){
     return 0;
   }else{
-    if (controller.getRawButton(1)){ //(Hold X to reverse)
+    if (controller.getRawButton(3)){ //(Hold Triangle to reverse)
       return -(controller.getRawAxis(4) + 1) / 2;
     }else{
       return (controller.getRawAxis(4) + 1) / 2;
@@ -132,10 +132,11 @@ public class RobotContainer {
         SmartDashboard.putString("DB/String 0", gameString);
       });
 
-      new JoystickButton(controller, 5).whenPressed(new ControlPanelPosition(controlPanel, colorDisplay, vision));
-      new JoystickButton(controller, 2).whileHeld(new ControlPanelRevolutions(controlPanel));
-      new POVButton(controller, 0).whenPressed(new RaiseControlPanel(controlPanel));
-      new POVButton(controller, 180).whenPressed(new LowerControlPanel(controlPanel));
+      new JoystickButton(controller, 6).whenPressed(new ControlPanelPosition(controlPanel, colorDisplay, vision));
+      new JoystickButton(controller, 3).whileHeld(new ControlPanelRevolutions(controlPanel));
+      new JoystickButton(controller, 4).whenPressed(new RaiseControlPanel(controlPanel));
+      new JoystickButton(controller, 2).whenPressed(new LowerControlPanel(controlPanel));
+      new JoystickButton(controller, 1).whileHeld(()->{new PowerCell().run_belt(-0.5);});
 
 
   }

@@ -37,7 +37,7 @@ public class DriveTrain extends SubsystemBase {
     m_rightMotor = new CANSparkMax(8, MotorType.kBrushless);
     m_rightMotor_1 = new CANSparkMax(9, MotorType.kBrushless);
     
-    m_drive = new DifferentialDrive(m_leftMotor, m_rightMotor);
+    m_drive = new DifferentialDrive(m_rightMotor, m_leftMotor);
 
 
     m_leftMotor.restoreFactoryDefaults();

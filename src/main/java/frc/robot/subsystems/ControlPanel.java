@@ -33,7 +33,7 @@ public class ControlPanel extends SubsystemBase {
     m_Solenoid3 = new Solenoid(3);
 
 
-    spinnerMotor = new CANSparkMax(7, MotorType.kBrushed);
+    spinnerMotor = new CANSparkMax(13, MotorType.kBrushed);
     spinnerMotor.restoreFactoryDefaults();
   }
 
