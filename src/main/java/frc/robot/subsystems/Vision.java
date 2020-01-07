@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.cameraserver.CameraServer;
 //import sun.awt.image.PixelConverter.ByteGray;
 import edu.wpi.first.wpiutil.math.Num;
+import frc.robot.subsystems.ColorDisplay.ControlPanelWedge;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -26,6 +27,7 @@ import edu.wpi.cscore.VideoSource;
 
 public class Vision {
 
+    private ColorDisplay colorDisplay;
     private CvSink video;
     private UsbCamera camera;
     private CameraServer server;
@@ -33,7 +35,7 @@ public class Vision {
 
     public Integer[] color;
 
-    public Vision(){
+    public Vision(ColorDisplay colorDisplay){
 
 
         camera = new UsbCamera("USB Camera 0", 0);
@@ -47,6 +49,7 @@ public class Vision {
         video = new CvSink("USB Camera 0");
         video.setSource(source);
 
+        this.colorDisplay = colorDisplay;
        
     }
     
@@ -54,6 +57,11 @@ public class Vision {
         Mat image = new Mat(video.getSource().getVideoMode().height, video.getSource().getVideoMode().width, 0);
         video.grabFrame(image);
         double[] currColor = image.get(image.rows()/2, image.cols()/2);
+        
+        System.out.println(Arrays.toString(currColor));
+        if(currColor.length < 3){
+            return null;
+        }
         int r = (int)currColor[2];
         int g = (int)currColor[1];
         int b = (int)currColor[0];
@@ -61,19 +69,20 @@ public class Vision {
         
         Integer guess = null;
         if (r > 128 && g < 128 && b < 128){
-            guess = 2; //RED
+            guess = ControlPanelWedge.RED.ordinal(); //RED
         }
         if (r > 128 && g > 128 && b < 100){
-            guess = 3; //Yellow
+            guess = ControlPanelWedge.YELLOW.ordinal(); //Yellow
         }
         if (r < 128 && g > 128 && b < 128){
-            guess = 1; //GREEN
+            guess = ControlPanelWedge.GREEN.ordinal(); //GREEN
         }
         if (r < 128 && g > 100 && b > 128){
-            guess = 0; //CYAN
+            guess = ControlPanelWedge.BLUE.ordinal(); //CYAN
         }
         color = new Integer[]{r,g,b,guess};
         System.out.println(Arrays.toString(color));
+        colorDisplay.updateDetection(color);
         return color;
         //0123-null
         //BGRY-none

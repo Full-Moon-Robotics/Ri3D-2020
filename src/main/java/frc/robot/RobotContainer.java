@@ -59,7 +59,7 @@ public class RobotContainer {
     }
   };
 
-  final Vision vision = new Vision();
+  final Vision vision = new Vision(colorDisplay);
 
 
   // Configure the button bindings

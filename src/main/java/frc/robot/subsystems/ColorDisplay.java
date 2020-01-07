@@ -89,10 +89,6 @@ public class ColorDisplay extends SubsystemBase {
     scoredColor.withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "black"));
     scoredColor.getEntry().setBoolean(false);
 
-    Shuffleboard.getTab("Tab 1").add("Scored Color", false).withWidget("Boolean Box");
-    scoredColor.withProperties(Map.of("colorWhenTrue", "green", "colorWhenFalse", "black"));
-    scoredColor.getEntry().setBoolean(false);
-
   }
 
   private void setWidget(SimpleWidget w, ControlPanelWedge color){
@@ -128,6 +124,15 @@ public class ColorDisplay extends SubsystemBase {
 
   public void setScoredColor(ControlPanelWedge color) {
     setWidget(scoredColor, color);
+  }
+
+  public void updateDetection(Integer[] colorsAndGuess){
+    String hex = "#";
+    for(int i = 0; i < 3; i++){
+      hex += Integer.toHexString(colorsAndGuess[i]);
+    }
+    setRawPixel(hex);
+    setDetectedColor(ControlPanelWedge.values()[colorsAndGuess[3]]);
   }
 
   @Override
