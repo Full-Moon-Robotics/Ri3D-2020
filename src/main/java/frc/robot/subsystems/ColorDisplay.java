@@ -41,11 +41,11 @@ public class ColorDisplay extends SubsystemBase {
       this.colorString = colorString;
     }
 
-    ControlPanelWedge previous(){
+    public ControlPanelWedge previous(){
       return values()[(this.ordinal()+values().length-1) % values().length];
     }
 
-    ControlPanelWedge next(){
+    public ControlPanelWedge next(){
       return values()[(this.ordinal()+1) % values().length];
     }
 
@@ -134,7 +134,7 @@ public class ColorDisplay extends SubsystemBase {
     setRawPixel(hex);
     ControlPanelWedge detected = colorsAndGuess[3] == null ? null : ControlPanelWedge.values()[colorsAndGuess[3]];
     setDetectedColor(detected);
-    setScoredColor(detected == null ? null: detected.previous().previous());
+    setScoredColor(detected == null ? null: detected.next().next());
   }
 
   @Override

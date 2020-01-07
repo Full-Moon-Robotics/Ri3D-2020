@@ -11,18 +11,21 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ColorDisplay;
 import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.ColorDisplay.ControlPanelWedge;
 
 //Spin the control panel to a specific color
 public class ControlPanelPosition extends CommandBase {
   ControlPanel controlPanel;
   ColorDisplay colorDisplay;
+  Vision vision;
   boolean finished = false;
   /**
    * Creates a new ControlPanelPosition.
    */
-  public ControlPanelPosition(ControlPanel controlPanel, ColorDisplay colorDisplay) {
+  public ControlPanelPosition(ControlPanel controlPanel, ColorDisplay colorDisplay, Vision vision) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.vision = vision;
     this.controlPanel = controlPanel;
     this.colorDisplay = colorDisplay;
     addRequirements(this.controlPanel, this.colorDisplay);
@@ -43,7 +46,7 @@ public class ControlPanelPosition extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(controlPanel.getCurrentColor().equals(colorDisplay.getFMSColor())){
+    if(ControlPanelWedge.values()[vision.color[3]].next().next().equals(colorDisplay.getFMSColor())){
       finished = true;
     } else{
       controlPanel.spin();
@@ -60,6 +63,6 @@ public class ControlPanelPosition extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return true;
+    return finished;
   }
 }
