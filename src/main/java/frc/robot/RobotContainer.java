@@ -132,7 +132,7 @@ public class RobotContainer {
         SmartDashboard.putString("DB/String 0", gameString);
       });
 
-      new JoystickButton(controller, 6).whenPressed(new ControlPanelPosition(controlPanel, colorDisplay, vision));
+      new JoystickButton(controller, 5).whenPressed(new ControlPanelPosition(controlPanel, colorDisplay, vision));
       new JoystickButton(controller, 2).whileHeld(new ControlPanelRevolutions(controlPanel));
       new POVButton(controller, 0).whenPressed(new RaiseControlPanel(controlPanel));
       new POVButton(controller, 180).whenPressed(new LowerControlPanel(controlPanel));

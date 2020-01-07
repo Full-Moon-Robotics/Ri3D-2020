@@ -26,7 +26,7 @@ public class Elevator extends SubsystemBase {
     
   public Elevator() {
     super();
-    if(!SubsystemConstants.REAL_ROBOT){
+    if(!SubsystemConstants.HAS_ELEVATOR){
       return;
     }
     m_leftMotor = new CANSparkMax(10, MotorType.kBrushless);

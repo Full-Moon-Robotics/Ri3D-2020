@@ -12,5 +12,6 @@ package frc.robot.subsystems;
  */
 public class SubsystemConstants {
     
-  public static final boolean REAL_ROBOT = false;
+  public static final boolean REAL_ROBOT = true;
+  public static final boolean HAS_ELEVATOR = false;
 }
