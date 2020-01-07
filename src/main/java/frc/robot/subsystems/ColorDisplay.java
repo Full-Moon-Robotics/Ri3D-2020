@@ -42,7 +42,7 @@ public class ColorDisplay extends SubsystemBase {
     }
 
     ControlPanelWedge previous(){
-      return values()[(this.ordinal()-1) % values().length];
+      return values()[(this.ordinal()+values().length-1) % values().length];
     }
 
     ControlPanelWedge next(){

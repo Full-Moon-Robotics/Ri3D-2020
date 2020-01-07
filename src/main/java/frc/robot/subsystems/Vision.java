@@ -40,7 +40,7 @@ public class Vision {
 
         camera = new UsbCamera("USB Camera 0", 0);
         camera.setWhiteBalanceManual(6500);
-        //camera.close();
+        camera.close();
         
         server = CameraServer.getInstance();
         source = server.startAutomaticCapture();
@@ -68,7 +68,7 @@ public class Vision {
         
         
         Integer guess = null;
-        if (r > 128 && g < 128 && b < 128){
+        if (r > 128 && g < 128 && b < 90){
             guess = ControlPanelWedge.RED.ordinal(); //RED
         }
         if (r > 128 && g > 128 && b < 100){
