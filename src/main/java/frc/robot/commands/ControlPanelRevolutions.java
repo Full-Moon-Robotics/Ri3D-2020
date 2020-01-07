@@ -30,7 +30,7 @@ public class ControlPanelRevolutions extends CommandBase {
   }
 
   // Called every time the scheduler runs while the command is scheduled.
-  @Overrides
+  @Override
   public void execute() {
   }
 
