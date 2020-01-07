@@ -132,7 +132,9 @@ public class ColorDisplay extends SubsystemBase {
       hex += Integer.toHexString(colorsAndGuess[i]);
     }
     setRawPixel(hex);
-    setDetectedColor(colorsAndGuess[3] == null ? null : ControlPanelWedge.values()[colorsAndGuess[3]]);
+    ControlPanelWedge detected = colorsAndGuess[3] == null ? null : ControlPanelWedge.values()[colorsAndGuess[3]];
+    setDetectedColor(detected);
+    setScoredColor(detected == null ? null: detected.previous().previous());
   }
 
   @Override

@@ -40,7 +40,7 @@ public class Vision {
 
         camera = new UsbCamera("USB Camera 0", 0);
         camera.setWhiteBalanceManual(6500);
-        camera.close();
+        //camera.close();
         
         server = CameraServer.getInstance();
         source = server.startAutomaticCapture();
