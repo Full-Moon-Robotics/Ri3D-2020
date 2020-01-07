@@ -76,9 +76,9 @@ public class RobotContainer {
     return 0;
   }else{
     if (controller.getRawButton(1)){ //(Hold X to reverse)
-      return - controller.getRawAxis(3);
+      return -(controller.getRawAxis(3) + 1) / 2;
     }else{
-      return controller.getRawAxis(3);
+      return (controller.getRawAxis(3) + 1) / 2;
     }
   }
   };
@@ -86,9 +86,9 @@ public class RobotContainer {
     return 0;
   }else{
     if (controller.getRawButton(1)){ //(Hold X to reverse)
-      return - controller.getRawAxis(4);
+      return -(controller.getRawAxis(4) + 1) / 2;
     }else{
-      return controller.getRawAxis(4);
+      return (controller.getRawAxis(4) + 1) / 2;
     }  }
 
   };
