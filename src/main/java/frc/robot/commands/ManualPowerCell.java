@@ -32,7 +32,11 @@ public class ManualPowerCell extends CommandBase {
   @Override
   public void execute() {
     m_powercell.run_intake(m_inspeed.getAsDouble());
-    m_powercell.run_output(m_inspeed.getAsDouble());
+    if (m_outspeed.getAsDouble() == 0){
+      m_powercell.run_output(-1);
+    }else{
+      m_powercell.run_output(m_inspeed.getAsDouble());
+    }
     m_powercell.run_belt(Math.max(m_inspeed.getAsDouble(), m_outspeed.getAsDouble()));
   }
 

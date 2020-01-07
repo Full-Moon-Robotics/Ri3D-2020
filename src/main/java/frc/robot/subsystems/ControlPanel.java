@@ -59,7 +59,7 @@ public class ControlPanel extends SubsystemBase {
   }
 
   public void spin(){
-    spinnerMotor.set(1);  //full power magic number 
+    spinnerMotor.set(.5);  //half power magic number 
   }
 
   @Override

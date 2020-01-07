@@ -34,6 +34,7 @@ public class ControlPanelPosition extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    this.controlPanel.extend();
     ControlPanelWedge color = colorDisplay.getFMSColor();
     if(color == null){
       //Not ready!
@@ -57,6 +58,7 @@ public class ControlPanelPosition extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     controlPanel.stop();
+    this.controlPanel.retract();
     DriverStation.reportWarning("Position Done", false);
   }
 

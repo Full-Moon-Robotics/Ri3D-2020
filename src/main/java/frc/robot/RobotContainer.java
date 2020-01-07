@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 //wpilibj.buttons
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -23,6 +24,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.commands.TankDrive;
 import frc.robot.commands.ControlPanelPosition;
+import frc.robot.commands.ControlPanelRevolutions;
+import frc.robot.commands.RaiseControlPanel;
+import frc.robot.commands.LowerControlPanel;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.ManualPowerCell;
 import frc.robot.subsystems.ColorDisplay;
@@ -68,17 +72,24 @@ public class RobotContainer {
     return 0;
   }
   };
-  final DoubleSupplier intakeSuppier = () -> { if (controller.getRawButton(3)){
+  final DoubleSupplier intakeSuppier = () -> { if (controller.getRawButton(3)){ // Hold triangle for elevator
     return 0;
   }else{
-    return controller.getRawAxis(3);
+    if (controller.getRawButton(1)){ //(Hold X to reverse)
+      return - controller.getRawAxis(3);
+    }else{
+      return controller.getRawAxis(3);
+    }
   }
   };
   final DoubleSupplier outputSupplier = () -> { if (controller.getRawButton(3)){
     return 0;
   }else{
-    return controller.getRawAxis(4);
-  }
+    if (controller.getRawButton(1)){ //(Hold X to reverse)
+      return - controller.getRawAxis(4);
+    }else{
+      return controller.getRawAxis(4);
+    }  }
 
   };
 
@@ -114,7 +125,7 @@ public class RobotContainer {
 
       //Print color string to console 
       //TODO replace with a command that does this in initialization and returns true on isFinished()
-      new JoystickButton(controller, 1).whenPressed(()->{
+      new JoystickButton(controller, 0).whenPressed(()->{
         String gameString = DriverStation.getInstance().getGameSpecificMessage();
         System.out.println(gameString);
         DriverStation.reportError(gameString, false);
@@ -122,6 +133,10 @@ public class RobotContainer {
       });
 
       new JoystickButton(controller, 6).whenPressed(new ControlPanelPosition(controlPanel, colorDisplay, vision));
+      new JoystickButton(controller, 2).whileHeld(new ControlPanelRevolutions(controlPanel));
+      new POVButton(controller, 0).whenPressed(new RaiseControlPanel(controlPanel));
+      new POVButton(controller, 180).whenPressed(new LowerControlPanel(controlPanel));
+
 
   }
 

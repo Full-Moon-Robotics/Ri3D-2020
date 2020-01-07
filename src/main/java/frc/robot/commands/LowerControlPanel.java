@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ControlPanel;
 
 //Spin the control panel
-public class ControlPanelRevolutions extends CommandBase {
+public class LowerControlPanel extends CommandBase {
   private final ControlPanel controlPanel;
   /**
    * Creates a new ControlPanelRevolutions.
    */
-  public ControlPanelRevolutions(ControlPanel controlPanel) {
+  public LowerControlPanel(ControlPanel controlPanel) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.controlPanel = controlPanel;
     addRequirements(controlPanel);
@@ -26,13 +26,13 @@ public class ControlPanelRevolutions extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    this.controlPanel.extend();
+    this.controlPanel.retract();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    this.controlPanel.spin();
+    this.controlPanel.retract();
   }
 
   // Called once the command ends or is interrupted.
