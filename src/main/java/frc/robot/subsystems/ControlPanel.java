@@ -8,7 +8,6 @@
 package frc.robot.subsystems;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.EncoderType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -34,9 +33,8 @@ public class ControlPanel extends SubsystemBase {
     m_Solenoid3 = new Solenoid(3);
 
 
-    spinnerMotor = new CANSparkMax(7, MotorType.kBrushless);
+    spinnerMotor = new CANSparkMax(7, MotorType.kBrushed);
     spinnerMotor.restoreFactoryDefaults();
-    spinnerMotor.getEncoder(EncoderType.kHallSensor, 4096);
   }
 
   public ControlPanelWedge getCurrentColor(){
